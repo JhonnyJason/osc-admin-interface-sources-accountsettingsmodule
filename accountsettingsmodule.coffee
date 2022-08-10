@@ -1,24 +1,33 @@
-accountsettingsmodule = {name: "accountsettingsmodule"}
 ############################################################
-#region printLogFunctions
-log = (arg) ->
-    if allModules.debugmodule.modulesToDebug["accountsettingsmodule"]?  then console.log "[accountsettingsmodule]: " + arg
-    return
-ostr = (obj) -> JSON.stringify(obj, null, 4)
-olog = (obj) -> log "\n" + ostr(obj)
-print = (arg) -> console.log(arg)
+#region debug
+import { createLogFunctions } from "thingy-debug"
+{log, olog} = createLogFunctions("accountsettingsmodule")
 #endregion
 
 ############################################################
 #region modulesFromEnvironment
-secretManagerClientFactory = require("secret-manager-client")
+import * as secretManagerClientFactory from "./secretmanagementinterface.js"
+
+import * as state from "./statemodule.js"
+import * as utl from "./utilsmodule.js"
+import *  as qrDisplay from "./qrdisplaymodule.js"
+import *  as qrReader from "./qrreadermodule.js" 
 
 ############################################################
-utl = null 
-state = null
-qrDisplay = null
-qrReader = null 
-
+#strange... whynotwork?
+idDisplay = document.getElementById("id-display")
+idQrButton = document.getElementById("id-qr-button")
+addKeyButton = document.getElementById("add-key-button")
+deleteKeyButton = document.getElementById("delete-key-button")
+importKeyInput = document.getElementById("import-key-input")
+acceptKeyButton = document.getElementById("accept-key-button")
+qrScanImport = document.getElementById("qr-scan-import")
+floatingImport = document.getElementById("floating-import")
+signatureImport = document.getElementById("signature-import")
+copyExport = document.getElementById("copy-export")
+qrExport = document.getElementById("qr-export")
+floatingExport = document.getElementById("floating-export")
+signatureExport = document.getElementById("signature-export")
 #endregion
 
 ############################################################
@@ -26,13 +35,8 @@ idContent = null
 currentClient = null
 
 ############################################################
-accountsettingsmodule.initialize = ->
-    log "accountsettingsmodule.initialize"
-    utl = allModules.utilmodule
-    state = allModules.statemodule
-    qrDisplay = allModules.qrdisplaymodule
-    qrReader = allModules.qrreadermodule
-
+export initialize = ->
+    log "initialize"
     idContent = idDisplay.getElementsByClassName("display-frame-content")[0]
 
     idDisplay.addEventListener("click", idDisplayClicked)
@@ -196,11 +200,6 @@ signatureExportClicked = ->
 #endregion
 
 ############################################################
-#region exposedFunctions
-accountsettingsmodule.getClient = -> currentClient
-
-#endregion
-
-module.exports = accountsettingsmodule
+export getClient = -> currentClient
 
 #92e102b2b2ef0d5b498fae3d7a9bbc94fc6ddc9544159b3803a6f4d239d76d62
