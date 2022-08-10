@@ -1,0 +1,114 @@
+// accountsettings styles
+picture-size ?= 90px
+id-copy-icon-size ?= 15px
+options-button-size ?= 30px
+cd-bright ?= white
+cd-dark ?= black 
+
+
+#accountsettings
+    h1
+        margin-top 40px !important
+    h3
+        margin 10px 0
+
+    #import-title,
+    #key-input-line,
+    #import-options-line
+        display: none
+    #add-key-button,
+    #floating-import,
+    #signature-import,
+    #floating-export,
+    #signature-export
+        opacity: 0.2
+        pointer-events: none
+
+
+#id-display
+    overflow hidden
+    width 100%
+    background-color cd-dark
+    display flex
+    padding 7px
+    box-sizing: border-box
+
+    .display-frame-content
+        text-overflow: ellipsis
+        overflow hidden
+        width "calc(100% - %s)" % id-copy-icon-size
+    .copy-icon
+        width id-copy-icon-size
+        height id-copy-icon-size
+
+#id-qr-line
+    overflow: hidden
+    display flex
+    justify-content: flex-end
+    
+#id-qr-button
+    padding 5px
+    svg
+        width options-button-size
+        height options-button-size
+
+#key-input-line
+    position relative
+    background-color cd-dark
+    input
+        width "calc(100% - %s)" % (options-button-size * 2)
+
+#accept-key-button
+    display none
+    position absolute
+    left auto
+    right 3px
+    top 50%
+    transform: translateY(-50%)
+    .click-button
+        padding (options-button-size / 4)
+    svg
+        width: options-button-size - 5px
+        height: options-button-size - 5px
+
+#export-options-line,
+#import-options-line,
+#add-delete-options-line
+    display flex
+    justify-content: space-around
+    .click-button
+        padding (options-button-size / 4)
+    svg
+        width: options-button-size 
+        height: options-button-size 
+
+#export-options-line,
+#import-options-line,
+#add-delete-options-line    
+    margin auto
+    max-width: 320px
+    margin-bottom: 30px
+    border solid 1px cd-dark
+
+#accountsettings.no-key
+    #delete-key-button
+        opacity 0.2
+        pointer-events: none
+    #export-title,
+    #export-options-line
+        display none
+
+    #add-key-button
+        opacity 1
+        pointer-events: all
+    
+    #import-title
+    #key-input-line
+        display: block
+    #import-options-line
+        display flex
+
+
+#accountsettings.importing
+    #accept-key-button
+        display inline-block

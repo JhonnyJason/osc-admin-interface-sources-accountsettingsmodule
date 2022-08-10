@@ -1,0 +1,29 @@
+//- accountsettings structure
+#accountsettings
+    h1 Acccount Settings
+    p By importing or generating any key, I understand that - whenever using said key the associated account will be identifiable by its ID.
+    h2 ID
+    #id-display.text-display-frame.click-button
+        .display-frame-content
+        svg.copy-icon: use(href="#svg-copy-icon")
+    #id-qr-line
+        #id-qr-button.click-button: svg: use(href="#svg-qrcode-icon")
+    h2 Create Key | Delete Key
+    #add-delete-options-line
+        #add-key-button.click-button: svg: use(href="#svg-add-icon")
+        #delete-key-button.click-button: svg: use(href="#svg-trash-icon")
+    h3#import-title Import Key 
+    #key-input-line
+        input#import-key-input
+        #accept-key-button.click-button: svg: use(href="#svg-check-icon")
+    #import-options-line 
+        #qr-scan-import.click-button: svg: use(href="#svg-qrscan-icon")
+        #floating-import.click-button: svg: use(href="#svg-code-icon")
+        #signature-import.click-button: svg: use(href="#svg-metamask-icon")
+    h3#export-title Export Key
+    #export-options-line 
+        #copy-export.click-button: svg: use(href="#svg-copy-icon")
+        #qr-export.click-button: svg: use(href="#svg-qrcode-icon")
+        #floating-export.click-button: svg: use(href="#svg-code-icon")
+        #signature-export.click-button: svg: use(href="#svg-metamask-icon")
+    
