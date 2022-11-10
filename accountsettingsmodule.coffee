@@ -6,7 +6,7 @@ import { createLogFunctions } from "thingy-debug"
 
 ############################################################
 #region modulesFromEnvironment
-import * as secretManagerClientFactory from "./secretmanagementinterface.js"
+import { createClient } from "secret-manager-client"
 
 import * as state from "./statemodule.js"
 import * as utl from "./utilsmodule.js"
@@ -67,10 +67,11 @@ export initialize = ->
 createCurrentClient = ->
     log "createCurrentClient"
     try
-        key = utl.strip0x(state.load("secretKeyHex"))
-        id = utl.strip0x(state.load("publicKeyHex"))
+        secretKeyHex = utl.strip0x(state.load("secretKeyHex"))
+        publicKeyHex = utl.strip0x(state.load("publicKeyHex"))
         serverURL = state.get("secretManagerURL")
-        if utl.isValidKey(key) and utl.isValidKey(id) then currentClient = await secretManagerClientFactory.createClient(key, id, serverURL)
+        clientOptions = {secretKeyHex, publicKeyHex, serverURL}
+        currentClient = await createClient(clientOptions)
     catch err then log err
     return
 
@@ -147,7 +148,7 @@ acceptKeyButtonClicked = ->
     key = utl.strip0x(importKeyInput.value)
     return unless utl.isValidKey(key)
     serverURL = state.load("secretManagerURL")
-    currentClient = await secretManagerClientFactory.createClient(key, null, serverURL)
+    currentClient = await createClient(key, null, serverURL)
     state.save("secretKeyHex", currentClient.secretKeyHex)
     state.save("publicKeyHex", currentClient.publicKeyHex)
     state.save("accountId", currentClient.publicKeyHex)
