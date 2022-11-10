@@ -118,12 +118,16 @@ addKeyButtonClicked = ->
     log "addKeyButtonClicked"
     try
         serverURL = state.load("secretManagerURL")
-        currentClient = await secretManagerClientFactory.createClient(null, null, serverURL)
+        currentClient = createClient({serverURL})
+        await currentClient.keysReady
+        log "publicKeyHex: #{currentClient.publicKeyHex}"
+        log "secretKeyHex: #{currentClient.secretKeyHex}"
+        
         state.save("secretKeyHex", currentClient.secretKeyHex)
         state.save("publicKeyHex", currentClient.publicKeyHex)
         state.save("accountId", currentClient.publicKeyHex)
     catch err
-        log err
+        log "Error when trying to create a new client on #{serverURL}\n#{err.message}"
     return
 
 deleteKeyButtonClicked = ->
